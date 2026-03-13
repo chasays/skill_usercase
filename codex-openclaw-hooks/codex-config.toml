@@ -1,0 +1,16 @@
+# Example Codex configuration for this workflow.
+# Copy relevant pieces into ~/.codex/config.toml if useful.
+
+model = "gpt-5.4"
+approval_policy = "never"
+sandbox_mode = "workspace-write"
+
+[profiles.safe]
+model = "gpt-5.4"
+sandbox_mode = "workspace-write"
+approval_policy = "never"
+
+[profiles.readonly]
+model = "gpt-5.4"
+sandbox_mode = "read-only"
+approval_policy = "never"
