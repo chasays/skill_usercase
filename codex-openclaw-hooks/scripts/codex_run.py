@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import platform
 import shlex
 import subprocess
 import sys
@@ -47,8 +48,34 @@ def run_with_pty(cmd: list[str], cwd: str | None) -> int:
     script_bin = which("script")
     if script_bin:
         cmd_str = " ".join(shlex.quote(c) for c in cmd)
-        proc = subprocess.run([script_bin, "-q", "-c", cmd_str, "/dev/null"], cwd=cwd, text=True)
-        return proc.returncode
+        if platform.system() == "Darwin":
+            proc = subprocess.run(
+                [script_bin, "-q", "/dev/null", "sh", "-lc", cmd_str],
+                cwd=cwd,
+                text=True,
+                capture_output=True,
+            )
+        else:
+            proc = subprocess.run(
+                [script_bin, "-q", "-c", cmd_str, "/dev/null"],
+                cwd=cwd,
+                text=True,
+                capture_output=True,
+            )
+
+        combined = (proc.stdout or "") + (proc.stderr or "")
+        script_failed = proc.returncode != 0 and (
+            "tcgetattr/ioctl" in combined
+            or "illegal option" in combined
+            or "Operation not supported on socket" in combined
+        )
+        if not script_failed:
+            if proc.stdout:
+                sys.stdout.write(proc.stdout)
+            if proc.stderr:
+                sys.stderr.write(proc.stderr)
+            return proc.returncode
+
     proc = subprocess.run(cmd, cwd=cwd, text=True)
     return proc.returncode
 
