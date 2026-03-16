@@ -1,13 +1,15 @@
 # skill_usercase
 
-A public collection of reusable OpenClaw / Agent skills.
+A public collection of reusable OpenClaw / Agent skills and related workflow examples.
 
-## Included skills
+## Included items
 
-| Skill | Description |
-|---|---|
-| `link-to-wechat-article` | Turn a shared link into a WeChat Official Account draft article, rewritten in a personal-commentary style. |
-| `link-to-chiphub-post` | Turn a shared link into a ChipHub website article and optionally publish it to a GitHub-backed ChipHub site repo. |
+| Name | Type | Description |
+|---|---|---|
+| `link-to-wechat-article` | skill | Turn a shared link into a WeChat Official Account draft article, rewritten in a personal-commentary style. |
+| `link-to-chiphub-post` | skill | Turn a shared link into a ChipHub website article and optionally publish it to a GitHub-backed ChipHub site repo. |
+| `codex-openclaw-hooks` | workflow / helper package | Reusable Codex runner, hooks, and callback-style OpenClaw notification workflow. |
+| `chrome_tampermonkey` | misc examples | Browser-side notes and scripts related to Tampermonkey usage. |
 
 ## Repository structure
 
@@ -25,18 +27,30 @@ skill_usercase/
     LICENSE
     references/
     scripts/
+  codex-openclaw-hooks/
+    SKILL.md
+    LICENSE
+    README.md
+    USAGE.md
+    codex-config.toml
+    hooks/
+    scripts/
+  chrome_tampermonkey/
+    list.md
 ```
 
 ## Conventions
 
-- Each skill lives in its own subdirectory.
-- Each skill should include its own `SKILL.md`.
-- If needed, each skill can also include `references/`, `scripts/`, `assets/`, and examples.
-- More skills can be added over time under this same repository.
+- Each reusable skill lives in its own top-level directory.
+- Skill directories should include `SKILL.md` at minimum.
+- Skills may also include `references/`, `scripts/`, `assets/`, examples, or helper config files when needed.
+- Some top-level directories may store workflow examples, helper packages, or notes instead of a standalone skill.
+- More items can be added over time under this same repository.
 
 ## How to use
 
-Read the `SKILL.md` inside each skill directory for usage, requirements, and workflow details.
+- For a skill: read the `SKILL.md` inside that directory first.
+- For helper packages or workflow examples: read their local docs such as `README.md`, `USAGE.md`, or note files.
 
 ## Chinese version
 
@@ -45,5 +59,6 @@ For the Chinese version of this repository overview, see [`README_CN.md`](./READ
 ## Roadmap
 
 - Add more reusable publishing and automation skills
-- Add clearer install/import examples
-- Add per-skill screenshots or demo flows if needed
+- Add clearer install / import examples
+- Add lightweight examples for non-skill helper directories
+- Add per-item screenshots or demo flows if needed
