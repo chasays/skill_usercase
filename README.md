@@ -7,6 +7,7 @@ A public collection of reusable OpenClaw / Agent skills.
 | Skill | Description |
 |---|---|
 | `link-to-wechat-article` | Turn a shared link into a WeChat Official Account draft article, rewritten in a personal-commentary style. |
+| `link-to-chiphub-post` | Turn a shared link into a ChipHub website article and optionally publish it to a GitHub-backed ChipHub site repo. |
 
 ## Repository structure
 
@@ -45,6 +46,4 @@ For the Chinese version of this repository overview, see [`README_CN.md`](./READ
 
 - Add more reusable publishing and automation skills
 - Add clearer install/import examples
-- Add per-skill screenshots or demo flows if needed
- clearer install/import examples
 - Add per-skill screenshots or demo flows if needed
