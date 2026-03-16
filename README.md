@@ -19,6 +19,11 @@ skill_usercase/
     LICENSE
     references/
     scripts/
+  link-to-chiphub-post/
+    SKILL.md
+    LICENSE
+    references/
+    scripts/
 ```
 
 ## Conventions
@@ -40,4 +45,6 @@ For the Chinese version of this repository overview, see [`README_CN.md`](./READ
 
 - Add more reusable publishing and automation skills
 - Add clearer install/import examples
+- Add per-skill screenshots or demo flows if needed
+ clearer install/import examples
 - Add per-skill screenshots or demo flows if needed
