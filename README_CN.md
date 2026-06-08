@@ -8,6 +8,7 @@
 |---|---|---|
 | `link-to-wechat-article` | skill | 将分享链接改写成带个人评论风格的微信公众号草稿文章。 |
 | `link-to-chiphub-post` | skill | 将分享链接改写成 ChipHub 网站文章，并可按需发布到基于 GitHub 的 ChipHub 站点仓库。 |
+| `claude-plan-review` | skill | 在编码前，用 terminal Claude Code 对 implementation plan 做两轮审阅。 |
 | `codex-openclaw-hooks` | 工作流 / 辅助包 | 提供可复用的 Codex 运行器、hooks，以及回调式 OpenClaw 通知流程。 |
 | `chrome_tampermonkey` | 杂项示例 | 存放和 Tampermonkey 使用相关的浏览器侧笔记与脚本示例。 |
 
@@ -27,6 +28,9 @@ skill_usercase/
     LICENSE
     references/
     scripts/
+  claude-plan-review/
+    SKILL.md
+    LICENSE
   codex-openclaw-hooks/
     SKILL.md
     LICENSE

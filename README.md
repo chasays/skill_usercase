@@ -8,6 +8,7 @@ A public collection of reusable OpenClaw / Agent skills and related workflow exa
 |---|---|---|
 | `link-to-wechat-article` | skill | Turn a shared link into a WeChat Official Account draft article, rewritten in a personal-commentary style. |
 | `link-to-chiphub-post` | skill | Turn a shared link into a ChipHub website article and optionally publish it to a GitHub-backed ChipHub site repo. |
+| `claude-plan-review` | skill | Run a two-round terminal Claude Code review loop for implementation plans before coding. |
 | `codex-openclaw-hooks` | workflow / helper package | Reusable Codex runner, hooks, and callback-style OpenClaw notification workflow. |
 | `chrome_tampermonkey` | misc examples | Browser-side notes and scripts related to Tampermonkey usage. |
 
@@ -27,6 +28,9 @@ skill_usercase/
     LICENSE
     references/
     scripts/
+  claude-plan-review/
+    SKILL.md
+    LICENSE
   codex-openclaw-hooks/
     SKILL.md
     LICENSE
