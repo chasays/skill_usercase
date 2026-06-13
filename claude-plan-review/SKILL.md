@@ -25,7 +25,7 @@ claude --print --model opus --effort xhigh --permission-mode plan --output-forma
 
 Do not add `--bare` for normal review calls; bare mode can skip OAuth/keychain auth and may make an otherwise logged-in setup look unauthenticated unless API-key auth is separately configured.
 
-For long reviews, start Claude CLI in the background and poll files instead of waiting on terminal scrollback:
+For long reviews in Codex or other one-shot shell/tool environments, do not put Claude CLI in shell background with `&` as the default. The parent shell may exit after the tool call returns, which can terminate or orphan the review before it writes an exit file. Run Claude as a foreground long process, persist stdout/stderr/exit artifacts, and let the tool session handle waiting or polling:
 
 ```bash
 review_dir="docs/superpowers/plans/YYYY-MM-DD-<feature>-reviews"
@@ -34,25 +34,24 @@ prompt_file="$review_dir/claude-review-$round.prompt.txt"
 raw_json="$review_dir/claude-review-$round.raw.json"
 err_log="$review_dir/claude-review-$round.stderr.log"
 exit_file="$review_dir/claude-review-$round.exit"
-pid_file="$review_dir/claude-review-$round.pid"
 
-(claude --print --model opus --effort xhigh --permission-mode plan --output-format json < "$prompt_file" > "$raw_json" 2> "$err_log"; printf '%s' "$?" > "$exit_file") &
-printf '%s\n' "$!" > "$pid_file"
+claude --print --model opus --effort xhigh --permission-mode plan --output-format json < "$prompt_file" > "$raw_json" 2> "$err_log"
+printf '%s' "$?" > "$exit_file"
 ```
 
-Poll every 30-60 seconds:
+If the tool returns a live session while Claude is still running, poll that session every 30-60 seconds. When `exit_file` exists, read it:
 
 ```bash
 if [ -f "$exit_file" ]; then
   cat "$exit_file"
-elif ps -p "$(cat "$pid_file")" >/dev/null 2>&1; then
-  echo "Claude review still running"
 else
-  echo "Claude review process is gone without an exit file"
+  echo "Claude review still running"
 fi
 ```
 
-When `exit_file` contains `0`, extract the JSON `result` field into `claude-review-N.md`. If Claude runs unusually long, keep polling unless the user asks to stop; after roughly 15 minutes for a normal plan or 30 minutes for a large plan, report that it is still running and offer to continue waiting, kill/retry, lower effort, or split the plan. Do not start a duplicate review while the original PID is alive.
+Only use shell backgrounding in a persistent interactive terminal or real process supervisor. If you must background the review, write `pid_file` and `exit_file`, then verify the PID is still alive after the launching shell returns before trusting the run.
+
+When `exit_file` contains `0`, extract the JSON `result` field into `claude-review-N.md`. If Claude runs unusually long, keep polling unless the user asks to stop; after roughly 15 minutes for a normal plan or 30 minutes for a large plan, report that it is still running and offer to continue waiting, kill/retry, lower effort, or split the plan. Do not start a duplicate review while an existing review session or verified PID is alive.
 
 If the current Claude Code session cannot be switched to the requested model/effort, state the mismatch and ask the user to set Claude Code to Opus 4.8 or 4.7 with `xhigh` effort before continuing the review loop.
 
